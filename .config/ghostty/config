@@ -1,0 +1,30 @@
+# Ghostty .config by xein
+
+command = /bin/nu
+
+theme = GitHub-Dark-Default
+font-family = JetBrainsMono Nerd Font
+background-opacity = 0.96
+window-width = 90
+window-height = 30
+
+window-new-tab-position = end
+clipboard-read = allow
+clipboard-write = allow
+
+# Cursor
+cursor-style = block
+cursor-style-blink = false
+cursor-invert-fg-bg = true
+mouse-hide-while-typing = true
+
+# Keybinds
+keybind = super+w=close_surface
+
+keybind = super+t=new_tab
+keybind = super+\=new_split:right
+
+keybind = super+shift+j=previous_tab
+keybind = super+shift+k=next_tab
+keybind = super+j=goto_split:left
+keybind = super+k=goto_split:right
