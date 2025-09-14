@@ -34,3 +34,8 @@ def --env y [...args] {
 def --wrapped dotfiles [...args] {
 	git --git-dir=($nu.home-path | path join ".dotfiles") --work-tree=($nu.home-path) ...$args
 }
+
+def gstat [] {
+	git diff --stat
+}
+
