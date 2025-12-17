@@ -1,5 +1,6 @@
 #
 # ~/.bashrc
+# By xein <3
 #
 
 # If not running interactively, don't do anything
@@ -7,6 +8,9 @@
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
+
+# Alias for dotfiles backup
+alias dotfiles='git -C $HOME --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 # Fancy PS1 text
 function get_prompt_path() {
