@@ -1,0 +1,7 @@
+[user]
+	email = xgonip@gmail.com
+	name = Xein
+[push]
+	autoSetupRemote = true
+[init]
+	defaultBranch = main
