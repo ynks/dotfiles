@@ -8,6 +8,8 @@
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
+alias y='yazi'
+alias n='nvim'
 
 # Alias for dotfiles backup
 alias dotfiles='git -C $HOME --git-dir=$HOME/.dotfiles --work-tree=$HOME'

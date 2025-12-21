@@ -5,5 +5,11 @@ return {
 			lazy = true,
 			event = "BufReadPost",
 			config = true,
+	},
+	{
+		"lewis6991/gitsigns.nvim",
+		config = {
+			numhl = true
+		}
 	}
 }
