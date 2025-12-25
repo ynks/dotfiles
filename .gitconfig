@@ -1,7 +1,34 @@
 [user]
 	email = xgonip@gmail.com
 	name = Xein
+
+[core]
+	editor = nvim
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	line-numbers = true
+	hyperlinks = true
+	side-by-side = true
+
+[merge]
+	conflictStyle = zdiff3
+	ff = false
+
 [push]
 	autoSetupRemote = true
+
 [init]
 	defaultBranch = main
+
+[alias]
+	log1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+	log2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+	lg = log1
+	graph = log1
+[pull]
+	ff = yes

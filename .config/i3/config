@@ -1,5 +1,7 @@
-# i3 config file (v4)
-# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+#
+# i3 config file
+# by Xein <3
+#
 
 # super key
 set $mod Mod4
@@ -10,7 +12,7 @@ font pango:JetbrainsMono Nerd Font 10
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork # Disable this for no lock
 exec --no-startup-id nm-applet
 
 #set caps to super
@@ -22,15 +24,29 @@ exec --no-startup-id feh --bg-fill ~/.config/wallpaper.png
 #picom
 exec "picom -b"
 
-# Use pactl to adjust volume in PulseAudio.
+###### Keyboard buttons
+# Audio
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% -n && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% -n && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && pkill -RTMIN+1 i3blocks
 
-# move tiling windows via drag & drop by left-clicking into the title bar,
-# or left-clicking anywhere into the window while holding the floating modifier.
+# Brightness
+bindsym XF86MonBrightnessUp exec "brightnessctl -d nvidia_0 set +5%; brightnessctl -d amdgpu_bl1 set +5%; pkill -RTMIN+2 i3blocks"
+bindsym XF86MonBrightnessDown exec "brightnessctl -d nvidia_0 set 5%-; brightnessctl -d amdgpu_bl1 set 5%-; pkill -RTMIN+2 i3blocks"
+
+# Keyboard
+bindsym XF86KbdBrightnessUp exec --no-startup-id "brightnessctl -d '*kbd_backlight*' set +1 && pkill -RTMIN+3 i3blocks"
+bindsym XF86KbdBrightnessDown exec --no-startup-id "brightnessctl -d '*kbd_backlight*' set 1- && pkill -RTMIN+3 i3blocks"
+
+# Performances
+bindsym XF86Launch3 exec "bash ~/.config/i3/scripts/gpu_button.sh"
+bindsym XF86Launch4 exec asusctl profile -n && pkill -RTMIN+4 i3blocks
+
+# TODO: Aura, fan, f9 f10 f12, m4
+
+# move tiling windows via drag & drop by left-clicking into the title bar
 floating_modifier $mod
 tiling_drag modifier titlebar
 
@@ -42,6 +58,9 @@ bindsym $mod+BackSpace kill
 bindsym $mod+space exec "rofi -show drun"
 bindsym $mod+Tab exec "rofi -show window"
 
+# screenshot
+bindsym $mod+shift+s exec "flameshot gui"
+
 # rofi mode
 mode "rofi" {
 	bindsym w exec "rofi -show window"
@@ -49,9 +68,9 @@ mode "rofi" {
 	bindsym d exec "rofi -show drun"
 
 	# Exit keybinds
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+d mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	bindsym $mod+d mode "default"
 }
 bindsym $mod+d mode "rofi"
 
@@ -170,8 +189,6 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000 #0c0c0c
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status --config ~/.config/i3/i3status.conf
-				colors { #          border  backgr. text
-					focused_workspace #e18aaa #e18aaa #ffffff
-				}
+	status_command i3blocks -c ~/.config/i3/i3blocks.conf
+	colors { focused_workspace #e18aaa #e18aaa #ffffff }
 }
