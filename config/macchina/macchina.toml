@@ -1,18 +1,1 @@
-long_uptime = true
-long_shell = false
-memory_percentage = true
-
-show = [
-    "Host",
-    "Machine",
-    "Kernel",
-    "Distribution",
-    "DesktopEnvironment",
-    "Packages",
-    "Shell",
-    "Terminal",
-    "Uptime",
-    "Processor",
-    "Memory",
-    "GPU"
-]
+/nix/store/xw5wh45nrqj1mnsk0lnwg575cn58lz7p-home-manager-files/.config/macchina/macchina.toml

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-STATUS=$(asusctl leds get | awk '{print $NF}')
+BRIGHTNESS=$(brightnessctl -d asus::kbd_backlight get 2>/dev/null)
 
-case "$STATUS" in
-	"Off")	echo "off" ;;
-	"Low")	echo "1" ;;
-	"Med")	echo "2" ;;
-	"High")	echo "3" ;;
+case "$BRIGHTNESS" in
+	"0")	echo "off" ;;
+	"1")	echo "1" ;;
+	"2")	echo "2" ;;
+	"3")	echo "3" ;;
 	*)		echo "0" ;;
 esac

@@ -1,19 +1,14 @@
-{ config, pkgs, ... }:
-
-let
-	# dotfiles stuff
-	dotfiles = "${config.home.homeDirectory}/dotfiles/config";
-	create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
-	configs = {
-		nvim = "nvim";
-		hypr = "hypr";
-		wezterm = "wezterm";
-		waybar = "waybar";
-		macchina = "macchina";
-	};
-in
+{ pkgs, ... }:
 
 {
+	imports = [
+		./modules/desktop.nix
+		./modules/shell.nix
+		./modules/coding.nix
+		./modules/gaming.nix
+		./modules/audio.nix
+	];
+
 	home.username = "xein";
 	home.homeDirectory = "/home/xein";
 	home.stateVersion = "25.11";
@@ -27,73 +22,11 @@ in
 		__GLX_VENDOR_LIBRARY_NAME = "nvidia";
 	};
 
-	programs.bash = {
-		enable = true;
-		shellAliases = {
-			n = "nvim";
-			x = "xmake";
-			g = "git";
-			rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles#kaveh";
-		};
-	};
-
-	programs.git = {
-		enable = true;
-		lfs.enable = true;
-
-		settings = {
-			user.name = "Xein";
-			user.email = "xgonip@gmail.com";
-			core.editor = "nvim";
-			init.defaultBranch = "main";
-			push.autoSetupRemote = true;
-		};
-	};
-
-	# create dotfiles symlinks
-	xdg.configFile = builtins.mapAttrs (name: subpath: {
-		source = create_symlink "${dotfiles}/${subpath}";
-		recursive = true;
-	}) configs;
-
-	# packages
 	home.packages = with pkgs; [
-		# fonts
-		monocraft
-		nerd-fonts.jetbrains-mono
-
-		# ToastVim config
-		neovim
-		lua
-		lua55Packages.luarocks_bootstrap
-		lazygit
-		fd
-		ripgrep
-		fzf
 		nodejs_25
 		curl
-		tree-sitter
 		tectonic
 		ghostscript
-
-		# programming tools
-		# gcc
-		gnumake
-		cmake
-		xmake
-		rustup
-		llvmPackages_latest.clang
-		llvmPackages_latest.llvm
-		llvmPackages_latest.lldb
-		clang-tools
-		dotnetCorePackages.sdk_10_0
-		roslyn-ls
-		nixd
-		emmylua-ls
-
-		# steam stuff
-		protonup-qt
-		mangohud
-		gamescope
 	];
 }
+

@@ -1,13 +1,1 @@
-hide_ascii = true
-spacing = 2
-separator = " ›"
-
-[palette]
-type = "Full"
-visible = true
-
-[keys]
-distribution = "Distro"
-processor = "CPU"
-memory = "RAM"
-
+/nix/store/xw5wh45nrqj1mnsk0lnwg575cn58lz7p-home-manager-files/.config/macchina/themes/custom.toml

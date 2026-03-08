@@ -57,7 +57,7 @@
 	"custom/fan-profile" : {
 		"exec": "~/dotfiles/scripts/fan-mode.sh",
 		"interval": 2,
-		"format": "FAN {}",
+		"format": "PROF {}",
 		"tooltip": false
 	},
 
@@ -79,7 +79,7 @@
 		"hwmon-path": "/sys/class/hwmon/hwmon5/temp1_input",
 		"format" : "TEMP {temperatureC}c",
 		"critical-threshold" : 85,
-		"format-critical" : "TEMP {temperatureC}C CRITICAL",
+		"format-critical" : "TEMP {temperatureC}c CRITICAL",
 		"tooltip": false
 	},
 
@@ -116,7 +116,6 @@
 		"exec": "~/dotfiles/scripts/kbd-backlight.sh",
 		"interval": 1,
 		"format": "KBD {}",
-		"on-click": "asusctl leds next",
 		"tooltip": false
 	}
 }

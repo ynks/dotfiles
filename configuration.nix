@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, hyprland, system, ... }:
 
 {
 	imports = [ # Hardware scan results
@@ -50,11 +50,11 @@
 		settings = {
 			no_logind = false;
 			logout_timeout_s = 10;
+			hotplug_type = "Asus";
 		};
 	};
 
 	services.asusd.enable = true;
-	services.power-profiles-daemon.enable = true;
 	services.upower.enable = true;
 
 ##################################################
@@ -83,7 +83,7 @@
 	services.greetd = {
 		enable = true;
 		settings.default_session = {
-			command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd start-hyprland";
+			command = "${pkgs.tuigreet}/bin/tuigreet --cmd start-hyprland";
 			user = "greeter";
 		};
 	};
@@ -100,6 +100,7 @@
 
 	users.users.xein = {
 		isNormalUser = true;
+		shell = pkgs.zsh;
 		extraGroups = [ "wheel" ]; # sudo access
 		packages = with pkgs; [
 			tree
@@ -111,10 +112,13 @@
 ##################################################
 
 	programs.firefox.enable = true;
+	programs.zsh.enable = true;
 
 	programs.hyprland = {
 		enable = true;
 		xwayland.enable = true;
+		package = hyprland.packages.${system}.hyprland;
+		portalPackage = hyprland.packages.${system}.xdg-desktop-portal-hyprland;
 	};
 
 	programs.steam = {
@@ -131,15 +135,9 @@
 		vim
 		wget
 
-# terminal / UI
-		wezterm
-		waybar
-		hyprpaper
-		wofi
-
 # system info
 		macchina
-		hyfetch # pride flag neofetch
+		hyfetch
 	];
 
 ##################################################
@@ -148,15 +146,47 @@
 
 	services.openssh.enable = true;
 
+	# Weekly flake update + rebuild
+	systemd.services.flake-update = {
+		description = "Update flake inputs and rebuild NixOS";
+		serviceConfig = {
+			Type = "oneshot";
+			WorkingDirectory = "/home/xein/dotfiles";
+			Nice = 19;
+			IOSchedulingClass = "idle";
+			ExecStart = "${pkgs.writeShellScript "flake-update" ''
+				set -e
+				${pkgs.nix}/bin/nix flake update --flake /home/xein/dotfiles
+				${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake /home/xein/dotfiles#kaveh
+			''}";
+		};
+		unitConfig.ConditionACPower = true;
+	};
+
+	systemd.timers.flake-update = {
+		description = "Weekly flake update";
+		wantedBy = [ "timers.target" ];
+		timerConfig = {
+			OnCalendar = "weekly";
+			Persistent = true;
+			RandomizedDelaySec = "2h";
+		};
+		unitConfig.ConditionPathExists = "!/run/user/1000";
+	};
+
 ##################################################
 # Nix package manager config
 ##################################################
 
 	nixpkgs.config.allowUnfree = true;
-	nix.settings.experimental-features = [
-		"nix-command"
-		"flakes"
-	];
+	nix.settings = {
+		experimental-features = [
+			"nix-command"
+			"flakes"
+		];
+		substituters = [ "https://hyprland.cachix.org" ];
+		trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+HA75vNoPMZhyfxzjEApRyMYVP1EZxc=" ];
+	};
 
 ##################################################
 # System version (DO NOT change even if you update)

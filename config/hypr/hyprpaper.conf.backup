@@ -1,0 +1,8 @@
+wallpaper {
+	monitor = 
+	path = ~/dotfiles/wallpapers/genshin-venti5.jpeg
+	fit_mode = cover
+}
+
+splash = false
+
