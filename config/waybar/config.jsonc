@@ -1,0 +1,108 @@
+{
+	"layer": "top",
+	"position": "bottom",
+	"height": 24,
+
+	// modules
+	"modules-left" : [
+
+	],
+
+	"modules-right": [
+		"custom/kbd-backlight",
+		"backlight",
+		"pulseaudio",
+		"custom/net",
+
+		"cpu",
+		"temperature",
+		"memory",
+		"custom/gpu-profile",
+
+		"custom/sep-orange",
+		"custom/fan-profile",
+		"battery",
+
+		"custom/sep-green",
+		"clock"
+	],
+
+	"custom/sep-orange": { "format": "", "tooltip": false },
+	"custom/sep-green": { "format": "", "tooltip": false },
+
+	// right
+	"clock" : {
+		"interval" : 1,
+		"format" : "T {:%d %b %Y %H:%M:%S}"
+	},
+
+	"battery" : {
+		"interval" : 10,
+		"states" : {
+			"critical" : 20
+		},
+
+		"format" : "BAT {capacity}%",
+		"format-charging" : "BAT {capacity}% CHR",
+		"format-plugged" : "BAT {capacity}% PLG",
+		"format-full" : "BAT FULL PLG",
+		"format-critical" : "BAT {capacity}% CRITICAL",
+		"format-time" : "{H}:{M}"
+	},
+
+	"custom/fan-profile" : {
+		"exec": "~/dotfiles/scripts/fan-mode.sh",
+		"interval": 10,
+		"format": "FAN {}"
+	},
+
+	"custom/gpu-profile" : {
+		"exec": "~/dotfiles/scripts/gpu-mode.sh",
+		"interval": 10,
+		"format": "GPU {}"
+	},
+
+	"memory" : {
+		"format" : "MEM {used:.1f}GiB"
+	},
+
+	"temperature" : {
+		"hwmon-path": "/sys/class/hwmon/hwmon5/temp1_input",
+		"format" : "TEMP {temperatureC}c",
+		"critical-threshold" : 90,
+		"format-critical" : "TEMP {temperatureC}C CRITICAL"
+	},
+
+	"cpu" : {
+		"format" : "CPU {load:.2f}"
+	},
+
+	"custom/net": {
+		"exec": "~/dotfiles/scripts/net.sh",
+		"interval": 20,
+		// "on-click" : "impala",
+		"format": "NET {}"
+	},
+
+	"pulseaudio": {
+		"format": "VOL {volume}% {format_source}",
+		"format-muted": "VOL mute {format_source}",
+		"format-source": "",
+		"format-source-muted": "mic",
+		"on-click": "pavucontrol",
+		"scroll-step": 5
+	},
+
+	"backlight": {
+		"device": "amdgpu_bl1",
+		"format": "SCR {percent}%"
+	},
+
+	"custom/kbd-backlight": {
+		"exec": "~/dotfiles/scripts/kbd-backlight.sh",
+		"interval": 10,
+		"format": "KBD {}",
+		"on-click": "asusctl leds next",
+		"tooltip": false
+	}
+}

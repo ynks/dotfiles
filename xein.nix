@@ -7,7 +7,9 @@ let
 	configs = {
 		nvim = "nvim";
 		hypr = "hypr";
-    wezterm = "wezterm";
+		wezterm = "wezterm";
+		waybar = "waybar";
+		macchina = "macchina";
 	};
 in
 
@@ -31,6 +33,7 @@ in
 			n = "nvim";
 			x = "xmake";
 			g = "git";
+			fetch = "MACCHINA_THEME=custom hyfetch";
 		};
 		profileExtra = ''
 			if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then

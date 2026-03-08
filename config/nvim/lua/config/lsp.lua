@@ -12,3 +12,6 @@ vim.lsp.enable({ "clangd" }) -- clangd
 vim.lsp.enable({ "rust_analyzer"})
 vim.lsp.enable({ "nixd" })
 vim.lsp.enable({ "roslyn_ls" })
+vim.lsp.enable({ "ts_ls" })
+vim.lsp.enable({ "html" })
+vim.lsp.enable({ "cssls" })

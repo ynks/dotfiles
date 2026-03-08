@@ -1,0 +1,13 @@
+hide_ascii = true
+spacing = 2
+separator = " ›"
+
+[palette]
+type = "Full"
+visible = true
+
+[keys]
+distribution = "Distro"
+processor = "CPU"
+memory = "RAM"
+
