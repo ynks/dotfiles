@@ -56,7 +56,7 @@
 
 	"custom/fan-profile" : {
 		"exec": "~/dotfiles/scripts/fan-mode.sh",
-		"interval": 10,
+		"interval": 2,
 		"format": "FAN {}",
 		"tooltip": false
 	},
@@ -114,7 +114,7 @@
 
 	"custom/kbd-backlight": {
 		"exec": "~/dotfiles/scripts/kbd-backlight.sh",
-		"interval": 10,
+		"interval": 1,
 		"format": "KBD {}",
 		"on-click": "asusctl leds next",
 		"tooltip": false

@@ -33,13 +33,8 @@ in
 			n = "nvim";
 			x = "xmake";
 			g = "git";
-			fetch = "MACCHINA_THEME=custom hyfetch";
+			rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles#kaveh";
 		};
-		profileExtra = ''
-			if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
-				exec start-hyprland
-			fi
-		'';
 	};
 
 	programs.git = {
