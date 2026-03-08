@@ -5,7 +5,8 @@
 
 	// modules
 	"modules-left" : [
-
+		"hyprland/workspaces",
+		"custom/sep-gray"
 	],
 
 	"modules-right": [
@@ -28,12 +29,14 @@
 	],
 
 	"custom/sep-orange": { "format": "", "tooltip": false },
+	"custom/sep-gray": { "format": "", "tooltip": false },
 	"custom/sep-green": { "format": "", "tooltip": false },
 
 	// right
 	"clock" : {
 		"interval" : 1,
-		"format" : "T {:%d %b %Y %H:%M:%S}"
+		"format" : "T {:%d %b %Y %H:%M:%S}",
+		"tooltip": false
 	},
 
 	"battery" : {
@@ -47,55 +50,66 @@
 		"format-plugged" : "BAT {capacity}% PLG",
 		"format-full" : "BAT FULL PLG",
 		"format-critical" : "BAT {capacity}% CRITICAL",
-		"format-time" : "{H}:{M}"
+		"format-time" : "{H}:{M}",
+		"tooltip": false
 	},
 
 	"custom/fan-profile" : {
 		"exec": "~/dotfiles/scripts/fan-mode.sh",
 		"interval": 10,
-		"format": "FAN {}"
+		"format": "FAN {}",
+		"tooltip": false
 	},
 
 	"custom/gpu-profile" : {
 		"exec": "~/dotfiles/scripts/gpu-mode.sh",
 		"interval": 10,
-		"format": "GPU {}"
+		"format": "GPU {}",
+		"tooltip": false
 	},
 
 	"memory" : {
-		"format" : "MEM {used:.1f}GiB"
+		"format" : "MEM {used:.1f}GiB",
+		"format-critical" : "MEM {used:.1}GiB CRITICAL",
+		"critical-threshold" : 80,
+		"tooltip": false
 	},
 
 	"temperature" : {
 		"hwmon-path": "/sys/class/hwmon/hwmon5/temp1_input",
 		"format" : "TEMP {temperatureC}c",
-		"critical-threshold" : 90,
-		"format-critical" : "TEMP {temperatureC}C CRITICAL"
+		"critical-threshold" : 85,
+		"format-critical" : "TEMP {temperatureC}C CRITICAL",
+		"tooltip": false
 	},
 
 	"cpu" : {
-		"format" : "CPU {load:.2f}"
+		"format" : "CPU {load:.2f}",
+		"tooltip": false
 	},
 
 	"custom/net": {
 		"exec": "~/dotfiles/scripts/net.sh",
 		"interval": 20,
 		// "on-click" : "impala",
-		"format": "NET {}"
+		"format": "NET {}",
+		"tooltip": false
 	},
 
 	"pulseaudio": {
-		"format": "VOL {volume}% {format_source}",
-		"format-muted": "VOL mute {format_source}",
+		"format": "VOL {volume}%{format_source}",
+		"format-muted": "VOL mute{format_source}",
 		"format-source": "",
-		"format-source-muted": "mic",
+		"format-source-muted": " mic",
 		"on-click": "pavucontrol",
-		"scroll-step": 5
+		"scroll-step": 5,
+		"tooltip": false
 	},
 
 	"backlight": {
 		"device": "amdgpu_bl1",
-		"format": "SCR {percent}%"
+		"format": "SCR {percent}%",
+		"tooltip": false
 	},
 
 	"custom/kbd-backlight": {

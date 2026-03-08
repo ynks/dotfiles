@@ -4,6 +4,7 @@
 @define-color orange #ff9e64;
 @define-color green #9ece6a;
 @define-color black #15161e;
+@define-color gray #414868;
 @define-color red #f7768e;
 
 * {
@@ -24,10 +25,15 @@ window#waybar {
 }
 
 #cpu, #temperature, #memory, #custom-gpu-profile {
-	color: @magenta;
+	color: @green;
 	padding: 0 6px;
 }
 
+#custom-sep-gray {
+	color: @gray;
+	background-color: @bg_dark;
+	font-size: 13pt;
+}
 
 #custom-sep-orange {
 	color: @orange;
@@ -36,7 +42,7 @@ window#waybar {
 }
 
 #custom-sep-green {
-	color: @green;
+	color: @magenta;
 	background-color: @orange;
 	font-size: 13pt;
 }
@@ -48,9 +54,28 @@ window#waybar {
 }
 
 #clock {
-	background-color: @green;
+	background-color: @magenta;
 	color: @black;
 	padding: 0 10px;
+}
+
+#workspaces button {
+	background-color: @gray;
+	color: @white;
+	border-radius: 0px;
+	padding: 0 4;
+}
+
+#workspaces button.active {
+	background-color: @magenta;
+	color: @black;
+	padding: 0 6;
+}
+
+#workspaces button.urgent {
+	background-color: @red;
+	color: @black;
+	padding: 0 6;
 }
 
 #battery.critical, #cpu.critical, #memory.critical, #temperature.critical, #pulseaudio.muted {
