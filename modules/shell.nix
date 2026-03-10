@@ -12,12 +12,14 @@
 			save = 10000;
 		};
 		initContent = ''
-			PROMPT='%F{green}[%n@%m]%f %~ %F{white}>%f '
+			PROMPT='%F{magenta}[%n@%m]%f %~ %F{white}>%f '
 		'';
 		shellAliases = {
 			n = "nvim";
 			g = "git";
 			rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles#kaveh";
+			devenv = "nix develop --command zsh";
+			local-llm = "nix develop ~/dotfiles/flakes/local-llm --command zsh";
 		};
 	};
 

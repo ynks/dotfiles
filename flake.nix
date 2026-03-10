@@ -27,6 +27,7 @@
 						backupFileExtension = "backup";
 						extraSpecialArgs = {
 							hy3Package = hy3.packages.${system}.hy3;
+							hyprlandPackage = hyprland.packages.${system}.hyprland;
 						};
 					};
 				}

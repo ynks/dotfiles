@@ -101,7 +101,7 @@
 	users.users.xein = {
 		isNormalUser = true;
 		shell = pkgs.zsh;
-		extraGroups = [ "wheel" ]; # sudo access
+		extraGroups = [ "wheel" "video" ];
 		packages = with pkgs; [
 			tree
 		];
@@ -146,6 +146,11 @@
 
 	services.openssh.enable = true;
 
+	services.ollama = {
+		enable = true;
+		package = pkgs.ollama-cuda;
+	};
+
 	# Weekly flake update + rebuild
 	systemd.services.flake-update = {
 		description = "Update flake inputs and rebuild NixOS";
@@ -184,8 +189,6 @@
 			"nix-command"
 			"flakes"
 		];
-		substituters = [ "https://hyprland.cachix.org" ];
-		trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+HA75vNoPMZhyfxzjEApRyMYVP1EZxc=" ];
 	};
 
 ##################################################

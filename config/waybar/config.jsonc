@@ -21,8 +21,8 @@
 		"custom/gpu-profile",
 
 		"custom/sep-orange",
-		"custom/fan-profile",
 		"battery",
+		"custom/fan-profile",
 
 		"custom/sep-green",
 		"clock"
@@ -31,6 +31,12 @@
 	"custom/sep-orange": { "format": "", "tooltip": false },
 	"custom/sep-gray": { "format": "", "tooltip": false },
 	"custom/sep-green": { "format": "", "tooltip": false },
+
+	"hyprland/workspaces": {
+		"persistent-workspaces": {
+			"*": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		}
+	},
 
 	// right
 	"clock" : {
@@ -57,7 +63,7 @@
 	"custom/fan-profile" : {
 		"exec": "~/dotfiles/scripts/fan-mode.sh",
 		"interval": 2,
-		"format": "PROF {}",
+		"format": "{}",
 		"tooltip": false
 	},
 
@@ -78,7 +84,7 @@
 	"temperature" : {
 		"hwmon-path": "/sys/class/hwmon/hwmon5/temp1_input",
 		"format" : "TEMP {temperatureC}c",
-		"critical-threshold" : 85,
+		"critical-threshold" : 90,
 		"format-critical" : "TEMP {temperatureC}c CRITICAL",
 		"tooltip": false
 	},

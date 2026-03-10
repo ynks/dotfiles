@@ -1,4 +1,4 @@
-{ config, pkgs, hy3Package, ... }:
+{ config, pkgs, hy3Package, hyprlandPackage, ... }:
 
 let
 	dotfiles = "${config.home.homeDirectory}/dotfiles/config";
@@ -8,6 +8,7 @@ in
 {
 	wayland.windowManager.hyprland = {
 		enable = true;
+		package = hyprlandPackage;
 		plugins = [ hy3Package ];
 		settings = {
 			monitor = ",preferred,auto,1.5";

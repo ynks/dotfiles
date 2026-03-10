@@ -66,6 +66,10 @@ window#waybar {
 	padding: 0 4;
 }
 
+#workspaces button.empty {
+	color: #6a6a8a;
+}
+
 #workspaces button.active {
 	background-color: @magenta;
 	color: @black;
