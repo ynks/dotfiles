@@ -10,7 +10,8 @@
 		hy3.url = "github:outfoxxed/hy3";
 	};
 
-	outputs = { nixpkgs, home-manager, hy3, ... }: let
+	outputs = { nixpkgs, home-manager, hy3, ... }:
+	let
 		system = "x86_64-linux";
 		hyprland = hy3.inputs.hyprland;
 	in {

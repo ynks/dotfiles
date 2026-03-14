@@ -3,22 +3,25 @@
 let
 	dotfiles = "${config.home.homeDirectory}/dotfiles/config";
 	create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
-in
-
-{
+in {
 	wayland.windowManager.hyprland = {
 		enable = true;
 		package = hyprlandPackage;
 		plugins = [ hy3Package ];
 		settings = {
-			monitor = ",preferred,auto,1.5";
+			monitor = [ 
+				"eDP-1,preferred,auto,1.5"
+				"HDMI-A-1,preferred,auto,1,mirror,eDP-1"
+			];
 			"$terminal" = "wezterm";
 			"$fileManager" = "dolphin";
 			"$menu" = "wofi --show drun";
-			"exec-once" = [ "waybar" "hyprpaper" ];
+			"exec-once" = [ "hyprpaper" "hyprctl setcursor rose-pine-hyprcursor 24" "waybar" ];
 			env = [
 				"XCURSOR_SIZE,24"
 				"HYPRCURSOR_SIZE,24"
+				"HYPRCURSOR_THEME,rose-pine-hyprcursor"
+				"XCURSOR_THEME,rose-pine-cursor"
 			];
 			source = [
 				"/home/xein/dotfiles/config/hypr/behaviour.conf"
@@ -115,5 +118,64 @@ in
 		# fonts
 		monocraft
 		nerd-fonts.jetbrains-mono
+
+		# cursor
+		rose-pine-hyprcursor
+		rose-pine-cursor
 	];
+
+	services.dunst = {
+		enable = true;
+		settings = {
+			global = {
+				width = 350;
+				offset = "(5, 5)";
+				origin = "bottom-right";
+
+				progress_bar_min_width = 330;
+				progress_bar_max_width = 330;
+				progress_bar_corner_radius = 2;
+
+				padding = 10;
+				horizontal_padding = 10;
+				frame_width = 2;
+				gap_size = 3;
+				font = "Monocraft 12";
+
+				corner_radius = 1;
+				background = "#16161e";
+				foreground = "#e0def4";
+			};
+
+			urgency_low = {
+				background = "#16161e";
+				highlight = "#7dcfff";
+				frame_color = "#7dcfff";
+				format = "<b>%s</b>\\n%b";
+			};
+
+			urgency_normal = {
+				background = "#16161e";
+				highlight = "#ff9e64";
+				frame_color = "#ff9e64";
+				format = "<b>%s</b>\\n%b";
+			};
+
+			urgency_critical = {
+				background = "#f7768e";
+				highlight = "#16161e";
+				foreground = "#16161e";
+				frame_color = "#f7768e";
+				format = "<b>%s</b>\\n%b";
+			};
+		};
+	};
+
+	home.pointerCursor = {
+		gtk.enable = true;
+		x11.enable = true;
+		package = pkgs.rose-pine-cursor;
+		name = "rose-pine-cursor";
+		size = 24;
+	};
 }

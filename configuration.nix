@@ -146,10 +146,10 @@
 
 	services.openssh.enable = true;
 
-	services.ollama = {
-		enable = true;
-		package = pkgs.ollama-cuda;
-	};
+	# services.ollama = {
+	# 	enable = true;
+	# 	package = pkgs.ollama-cuda;
+	# };
 
 	# Weekly flake update + rebuild
 	systemd.services.flake-update = {

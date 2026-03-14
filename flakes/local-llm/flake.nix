@@ -22,7 +22,7 @@
 			];
 
 			shellHook = ''
-				export ANTHROPIC_API_KEY="ollama"
+				export ANTHROPIC_AUTH_TOKEN="ollama"
 				export ANTHROPIC_BASE_URL="http://localhost:11434"
 
 				echo "Opened AI enviroment"

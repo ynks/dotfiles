@@ -27,6 +27,8 @@
 		curl
 		tectonic
 		ghostscript
+
+		vesktop
 	];
 }
 
