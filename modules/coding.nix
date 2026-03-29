@@ -22,5 +22,8 @@ in
 		tree-sitter
 		nixd
 		emmylua-ls
+
+		github-cli
+		github-copilot-cli
 	];
 }
