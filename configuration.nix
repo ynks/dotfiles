@@ -1,4 +1,4 @@
-{ config, lib, pkgs, hyprland, system, ... }:
+{ config, lib, pkgs, system, ... }:
 
 {
 	imports = [ # Hardware scan results
@@ -21,7 +21,7 @@
 	boot.initrd.kernelModules = [ "amdgpu" ];
 
 ##################################################
-# Graphics (NVIDIA + AMD integrated GPU)
+# NVIDIA stuff
 ##################################################
 
 	services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
@@ -40,7 +40,7 @@
 	};
 
 ##################################################
-# ASUS / Hybrid GPU management
+# ASUS
 ##################################################
 
 	systemd.services.supergfxd.path = [ pkgs.pciutils ];
@@ -67,7 +67,7 @@
 	networking.wireless.enable = true;
 
 ##################################################
-# Time / Locale
+# Time
 ##################################################
 
 	time.timeZone = "Europe/Madrid";
@@ -76,16 +76,24 @@
 # Login manager
 ##################################################
 
-	# WARN: IF YOU ARE NOT XEIN
-	# Ly does not work well with asusd and supergfxd
-	# Do not use ly as it's incompatible with logind and will not
-	# switch your graphic card settings
 	services.greetd = {
 		enable = true;
 		settings.default_session = {
-			command = "${pkgs.tuigreet}/bin/tuigreet --cmd start-hyprland";
+			command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd gnome-session";
 			user = "greeter";
 		};
+	};
+
+##################################################
+# GNOME
+##################################################
+
+	services.gnome.core-utilities.enable = true;
+	
+	services.xserver = {
+		enable = true;
+		displayManager.gdm.enable = true;
+		desktopManager.gnome.enable = true;
 	};
 
 ##################################################
@@ -114,13 +122,6 @@
 	programs.firefox.enable = true;
 	programs.zsh.enable = true;
 
-	programs.hyprland = {
-		enable = true;
-		xwayland.enable = true;
-		package = hyprland.packages.${system}.hyprland;
-		portalPackage = hyprland.packages.${system}.xdg-desktop-portal-hyprland;
-	};
-
 	programs.steam = {
 		enable = true;
 		remotePlay.openFirewall = true;
@@ -145,11 +146,6 @@
 ##################################################
 
 	services.openssh.enable = true;
-
-	# services.ollama = {
-	# 	enable = true;
-	# 	package = pkgs.ollama-cuda;
-	# };
 
 	# Weekly flake update + rebuild
 	systemd.services.flake-update = {
