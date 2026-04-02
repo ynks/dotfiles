@@ -8,6 +8,8 @@ config.initial_rows = 36
 config.enable_tab_bar = true
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = false
+config.window_decorations = "TITLE | RESIZE"
+config.tab_max_width = 120
 
 config.font_size = 12
 config.font = wezterm.font_with_fallback {

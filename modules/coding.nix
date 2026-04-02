@@ -11,11 +11,21 @@ in
 		recursive = true;
 	};
 
+	xdg.configFile.lazygit = {
+		source = create_symlink "${dotfiles}/lazygit";
+		recursive = true;
+	};
+
 	home.packages = with pkgs; [
+		# Editors & IDEs
 		neovim
+		jetbrains.clion
+
+		# Development tools
 		lua
 		lua55Packages.luarocks_bootstrap
 		lazygit
+		delta
 		fd
 		ripgrep
 		fzf
@@ -23,6 +33,7 @@ in
 		nixd
 		emmylua-ls
 
+		# GitHub tools
 		github-cli
 		github-copilot-cli
 	];

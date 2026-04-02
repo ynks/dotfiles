@@ -1,0 +1,18 @@
+gui:
+  # UI theme
+  theme:
+    activeBorderColor:
+      - bold
+      - blue
+    inactiveBorderColor:
+      - white
+    selectedLineBgColor:
+      - blue
+    selectedRangeBgColor:
+      - blue
+git:
+  # Delta configuration for diff view
+  pagers:
+    - colorArg: always
+      pager: delta --dark --paging=never
+      useConfig: false

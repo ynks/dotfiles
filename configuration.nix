@@ -94,6 +94,25 @@
 		enable = true;
 		displayManager.gdm.enable = true;
 		desktopManager.gnome.enable = true;
+		xkb = {
+			layout = "us";
+			options = "caps:super";
+		};
+	};
+
+##################################################
+# Audio
+##################################################
+
+	hardware.pulseaudio.enable = false;
+	services.pipewire = {
+		enable = true;
+		pulse.enable = true;
+		extraConfig.pipewire."92-low-latency" = {
+			"context.properties" = [
+				{ name = "link.max-buffers"; value = 16; }
+			];
+		};
 	};
 
 ##################################################
