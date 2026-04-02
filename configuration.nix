@@ -73,18 +73,6 @@
 	time.timeZone = "Europe/Madrid";
 
 ##################################################
-# Login manager
-##################################################
-
-	services.greetd = {
-		enable = true;
-		settings.default_session = {
-			command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd gnome-session";
-			user = "greeter";
-		};
-	};
-
-##################################################
 # GNOME
 ##################################################
 
@@ -93,7 +81,14 @@
 	services.xserver = {
 		enable = true;
 		displayManager.gdm.enable = true;
-		desktopManager.gnome.enable = true;
+		desktopManager.gnome = {
+			enable = true;
+			extraGSettingsOverridePackages = [ pkgs.mutter ];
+			extraGSettingsOverrides = ''
+				[org.gnome.mutter]
+				experimental-features=['scale-monitor-framebuffer']
+			'';
+		};
 		xkb = {
 			layout = "us";
 			options = "caps:super";
