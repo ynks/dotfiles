@@ -24,10 +24,6 @@
 
 	home.packages = with pkgs; [
 		nodejs_25
-		curl
-		tectonic
-		ghostscript
-
 		vesktop
 	];
 }

@@ -1,8 +1,11 @@
 local wezterm = require "wezterm"
 local config = wezterm.config_builder()
 
-config.initial_cols = 90
+config.initial_cols = 120
 config.initial_rows = 36
+config.window_padding = {
+	left = 0, right = 0, top = 0, bottom = 0
+}
 
 -- Enable tab bar
 config.enable_tab_bar = true

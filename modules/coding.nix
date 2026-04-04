@@ -24,16 +24,21 @@ in
 		# Development tools
 		lua
 		lua55Packages.luarocks_bootstrap
-		lazygit
 		delta
 		fd
 		ripgrep
 		fzf
 		tree-sitter
+    p7zip
+
+    #LSP
 		nixd
 		emmylua-ls
+    prettier
 
 		# GitHub tools
+    lazygit
+    gh-dash
 		github-cli
 		github-copilot-cli
 	];

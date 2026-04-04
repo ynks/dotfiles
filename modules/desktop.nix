@@ -53,12 +53,6 @@ home.packages = with pkgs; [
 	gnomeExtensions.appindicator
 	gnome-tweaks
 	wezterm
-	jq
-	brightnessctl
-
-	# Screenshot
-	gnome-screenshot
-	satty
 
 	# Fonts
 	monocraft
@@ -71,7 +65,6 @@ home.packages = with pkgs; [
 	firefox
 ];
 
-# Wezterm configuration with not-modern taskbar
 xdg.configFile = {
 	wezterm = { source = create_symlink "${dotfiles}/wezterm"; recursive = true; };
 };
@@ -88,27 +81,8 @@ xdg.userDirs = {
 	videos = null;
 };
 
-# Session variables for default editor
 home.sessionVariables = {
 	EDITOR = "nvim";
-};
-
-programs.firefox = {
-	enable = true;
-	profiles.default = {
-		settings = {
-			"toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-			"browser.uidensity" = 1;
-		};
-		userChrome = ''
-			/* Firefox GNOME theme integration */
-			:root {
-				--arrowpanel-border-color: rgba(0,0,0,.2);
-				--arrowpanel-background: #fff;
-				--lwt-toolbarbutton-hover-background: rgba(0,0,0,.06);
-			}
-		'';
-	};
 };
 
 }
