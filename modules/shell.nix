@@ -12,14 +12,17 @@
 			save = 10000;
 		};
 		initContent = ''
-			PROMPT='%F{magenta}[%n@%m]%f %~ %F{white}>%f '
+			if [[ -n "$IN_NIX_SHELL" ]]; then
+				PROMPT='%F{orange}[%n@%m]%f %~ %F{white}>%f '
+			else
+				PROMPT='%F{magenta}[%n@%m]%f %~ %F{white}>%f '
+			fi
 		'';
 		shellAliases = {
-			n = "nvim";
-			g = "git";
+      nv = "fd --hidden --type f --exclude .git | fzf --reverse | xargs nvim";
 			rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles#kaveh";
 			devenv = "nix develop --command zsh";
-			local-llm = "nix develop ~/dotfiles/flakes/local-llm --command zsh";
+      ".." = "cd ..";
 		};
 	};
 
@@ -33,6 +36,8 @@
 			core.editor = "nvim";
 			init.defaultBranch = "main";
 			push.autoSetupRemote = true;
+      pull.rebase = true;
+      rebase.autoStash = true;
 		};
 	};
 
