@@ -13,7 +13,7 @@
 		};
 		initContent = ''
 			if [[ -n "$IN_NIX_SHELL" ]]; then
-				PROMPT='%F{orange}[%n@%m]%f %~ %F{white}>%f '
+				PROMPT='%F{cyan}[%n@nixshell]%f %~ %F{white}>%f '
 			else
 				PROMPT='%F{magenta}[%n@%m]%f %~ %F{white}>%f '
 			fi

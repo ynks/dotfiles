@@ -20,6 +20,7 @@ in
 		# Editors & IDEs
 		neovim
 		jetbrains.clion
+		jetbrains.rider
 
 		# Development tools
 		lua
