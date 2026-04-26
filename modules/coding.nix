@@ -30,16 +30,16 @@ in
 		ripgrep
 		fzf
 		tree-sitter
-    p7zip
+		p7zip
 
-    #LSP
+		#LSP
 		nixd
 		emmylua-ls
-    prettier
+		prettier
 
 		# GitHub tools
-    lazygit
-    gh-dash
+		lazygit
+		gh-dash
 		github-cli
 		github-copilot-cli
 	];
