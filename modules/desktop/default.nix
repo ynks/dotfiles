@@ -2,26 +2,12 @@
 
 let
   dotfiles = "${config.home.homeDirectory}/dotfiles";
-  wallpaper = "${dotfiles}/wallpapers/genshin-venti5.jpeg";
 in
 
 {
   imports = [
     plasma-manager.homeModules.plasma-manager
-    ./appearance.nix
-    ./kwin.nix
-    ./konsole.nix
-    ./dolphin.nix
-    ./shortcuts.nix
   ];
-
-  programs.plasma = {
-    enable = true;
-    configFile = {
-      "yakuakerc"."Dialog"."FirstRun" = false;
-      "yakuakerc"."General"."AutoStart" = true;
-    };
-  };
 
   home.packages = with pkgs; with kdePackages; [
     konsole
@@ -82,23 +68,4 @@ in
     rocs
     labplot
   ];
-
-  xdg.configFile = {
-    "autostart/yakuake.desktop" = {
-      source = "${pkgs.kdePackages.yakuake}/share/autostart/org.kde.yakuake.desktop";
-    };
-  };
-
-
-
-  xdg.userDirs = {
-    desktop = null;
-    documents = null;
-    download = "${config.home.homeDirectory}/downloads";
-    music = null;
-    pictures = null;
-    publicShare = null;
-    templates = null;
-    videos = null;
-  };
 }

@@ -11,19 +11,25 @@
       size = 10000;
       save = 10000;
     };
-    initContent = ''
-      if [[ -n "$IN_NIX_SHELL" ]]; then
-        PROMPT='%F{cyan}[%n@nix-shell]%f %~ %F{white}>%f '
-      else
-        PROMPT='%F{magenta}[%n@%m]%f %~ %F{white}>%f '
-      fi
-    '';
+	initContent = ''
+		setopt PROMPT_PERCENT
+
+		set_my_prompt() {
+			if [[ -n "$IN_NIX_SHELL" ]]; then
+				PROMPT='%F{cyan}%n@nix-shell%f %~ %F{white}>%f '
+			else
+				PROMPT='%F{magenta}%n@%m%f %~ %F{white}>%f '
+					fi
+		}
+
+		precmd_functions+=(set_my_prompt)
+	'';
     shellAliases = {
       nv = "fd --hidden --type f --exclude .git | fzf --reverse | xargs nvim";
-      rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles#$(hostname)";
+      rebuild = "sudo nixos-rebuild switch --flake ~/Code/dotfiles#$(hostname)";
       devenv = "nix develop --command zsh";
-      rider = "nohup jetbrains-rider >/dev/null 2>&1 &";
-      clion = "nohup jetbrains-clion >/dev/null 2>&1 &";
+      rider = "nohup rider >/dev/null 2>&1 &";
+      clion = "nohup clion >/dev/null 2>&1 &";
       ".." = "cd ..";
     };
   };
