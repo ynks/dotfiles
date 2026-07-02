@@ -1,30 +1,26 @@
 { pkgs, ... }:
 
 {
-	imports = [
-		./modules/desktop.nix
-		./modules/shell.nix
-		./modules/coding.nix
-		./modules/gaming.nix
-		./modules/audio.nix
-	];
+  imports = [
+    ./modules/desktop
+    ./modules/shell.nix
+    ./modules/coding.nix
+    ./modules/gaming.nix
+    ./modules/art.nix
+    ./modules/audio.nix
+  ];
 
-	home.username = "xein";
-	home.homeDirectory = "/home/xein";
-	home.stateVersion = "25.11";
+  home.username = "xein";
+  home.homeDirectory = "/home/xein";
+  home.stateVersion = "25.11";
 
-	home.sessionVariables = {
-		NIXOS_OZONE_WL = "1";
-		WLR_NO_HARDWARE_CURSORS = "1";
-		LIBVA_DRIVER_NAME = "nvidia";
-		XDG_SESSION_TYPE = "wayland";
-		GBM_BACKEND = "nvidia-drm";
-		__GLX_VENDOR_LIBRARY_NAME = "nvidia";
-	};
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    XDG_SESSION_TYPE = "wayland";
+    EDITOR = "nvim";
+  };
 
-	home.packages = with pkgs; [
-		nodejs_25
-		vesktop
-	];
+  home.packages = with pkgs; [
+    discord
+  ];
 }
-

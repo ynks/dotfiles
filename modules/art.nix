@@ -2,8 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    reaper
-    raysession
-    carla
+    blender
+    davinci-resolve
   ];
 }
