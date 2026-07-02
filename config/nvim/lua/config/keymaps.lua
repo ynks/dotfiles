@@ -1,35 +1,13 @@
-local symbols = " .,(){}<>[]\"'"
-local pattern = symbols:gsub("([%%%^%]%-%]])", "%%%1")
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
 
-local tab_forward = function()
-  local line = vim.api.nvim_get_current_line()
-  local col = vim.api.nvim_win_get_cursor(0)[2]
-  if col == nil then
-    return
-  end
-  line = line:sub(col + 1)
-  local char = line:match("^.")
-  for c in symbols:gmatch(".") do
-    if char == c then
-      return "<C-o>a"
-    end
-  end
-  local result = line:match("[" .. pattern .. "]")
-  if result ~= nil then
-    return "<C-o>f" .. result:sub(1, 1)
-  end
-  if col == vim.fn.col("$") - 1 then
-    return "\t"
-  end
-  return "<C-o>A"
-end
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
-vim.keymap.set("i", "<S-Tab>", "<Tab>")
-vim.keymap.set("i", "<Tab>", tab_forward, { expr = true })
+vim.keymap.set("n", "<leader><leader>", function()
+  Snacks.picker("smart")
+end, { desc = "Search Everywhere" })
 
-pcall(vim.keymap.del, "n", "gra")
-pcall(vim.keymap.del, "n", "gri")
-pcall(vim.keymap.del, "n", "grn")
-pcall(vim.keymap.del, "n", "grr")
-pcall(vim.keymap.del, "n", "grt")
-pcall(vim.keymap.del, "n", "grx")
+vim.keymap.set("n", "<leader>/", function()
+  Snacks.picker("grep")
+end, { desc = "Search in files (grep)" })
