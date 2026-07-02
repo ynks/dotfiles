@@ -1,225 +1,184 @@
-{ config, lib, pkgs, system, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-	imports = [ # Hardware scan results
-		./hardware-configuration.nix
-	];
+  imports = [
+  ];
 
-##################################################
-# Boot
-##################################################
+  ##################################################
+  # Boot
+  ##################################################
 
-	boot.loader.systemd-boot.enable = true;
-	boot.loader.efi.canTouchEfiVariables = true;
-	boot.kernelPackages = pkgs.linuxPackages_latest;
-	boot.kernelParams = [ # NVIDIA DRM for Wayland
-		"nvidia-drm.modeset=1"
-		"nvidia-drm.fbdev=1"
-	];
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
-	# iGPU module needed for hybrid graphics laptops
-	boot.initrd.kernelModules = [ "amdgpu" ];
+  ##################################################
+  # Networking
+  ##################################################
 
-##################################################
-# NVIDIA stuff
-##################################################
+  networking.networkmanager.enable = true;
 
-	services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
+  ##################################################
+  # Time & Locale
+  ##################################################
 
-	hardware.graphics = {
-		enable = true;
-		enable32Bit = true;
-	};
+  time.timeZone = "Europe/Madrid";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "es_ES.UTF-8";
+    LC_IDENTIFICATION = "es_ES.UTF-8";
+    LC_MEASUREMENT = "es_ES.UTF-8";
+    LC_MONETARY = "es_ES.UTF-8";
+    LC_NAME = "es_ES.UTF-8";
+    LC_NUMERIC = "es_ES.UTF-8";
+    LC_PAPER = "es_ES.UTF-8";
+    LC_TELEPHONE = "es_ES.UTF-8";
+    LC_TIME = "es_ES.UTF-8";
+  };
 
-	hardware.nvidia = {
-		modesetting.enable = true;
-		powerManagement.enable = true;
-		open = true; # Use open kernel modules
-		nvidiaSettings = true;
-		package = config.boot.kernelPackages.nvidiaPackages.stable;
-	};
+  ##################################################
+  # X11 / KDE Plasma
+  ##################################################
 
-##################################################
-# ASUS
-##################################################
+  services.xserver = {
+    enable = true;
+    xkb = {
+      layout = "us";
+      options = "caps:super";
+    };
+  };
 
-	systemd.services.supergfxd.path = [ pkgs.pciutils ];
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
-	services.supergfxd = {
-		enable = true;
-		settings = {
-			no_logind = false;
-			logout_timeout_s = 10;
-			hotplug_type = "Asus";
-		};
-	};
+  ##################################################
+  # Graphics / NVIDIA (shared defaults)
+  ##################################################
 
-	services.asusd.enable = true;
-	services.upower.enable = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
-##################################################
-# Networking
-##################################################
+  ##################################################
+  # Audio
+  ##################################################
 
-	networking.hostName = "kaveh";
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+    extraConfig.pipewire."92-low-latency" = {
+      "context.properties" = [
+        { name = "link.max-buffers"; value = 16; }
+      ];
+    };
+  };
 
-	networking.networkmanager.enable = true;
-	networking.wireless.enable = true;
+  ##################################################
+  # Input
+  ##################################################
 
-##################################################
-# Time
-##################################################
+  services.libinput.enable = true;
 
-	time.timeZone = "Europe/Madrid";
+  ##################################################
+  # Programs
+  ##################################################
 
-##################################################
-# GNOME
-##################################################
+  programs.firefox.enable = true;
+  programs.zsh.enable = true;
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
+  };
+  programs.kdeconnect.enable = true;
+  programs.nix-ld.enable = true;
 
-	services.gnome.core-utilities.enable = true;
+  ##################################################
+  # Services
+  ##################################################
 
-  environment.gnome.excludePackages = (with pkgs; [
-      gnome-tour
-      epiphany
-      gnome-user-docs
-      yelp
-      gnome-font-viewer
-      gnome-maps
-      gnome-console
-      gnome-characters
-      gnome-clocks
-      gnome-contacts
-      gnome-weather
-      simple-scan
-      seahorse
-  ]);
+  services.openssh.enable = true;
+  services.printing.enable = true;
 
-	services.xserver = {
-		enable = true;
-		displayManager.gdm.enable = true;
-		desktopManager.gnome = {
-			enable = true;
-			extraGSettingsOverridePackages = [ pkgs.mutter ];
-			extraGSettingsOverrides = ''
-				[org.gnome.mutter]
-				experimental-features=['scale-monitor-framebuffer']
-			'';
-		};
-		xkb = {
-			layout = "us";
-			options = "caps:super";
-		};
-	};
+  ##################################################
+  # Users
+  ##################################################
 
-##################################################
-# Audio
-##################################################
+  users.users.xein = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+    extraGroups = [ "wheel" "video" "networkmanager" ];
+  };
 
-	hardware.pulseaudio.enable = false;
-	services.pipewire = {
-		enable = true;
-		pulse.enable = true;
-		extraConfig.pipewire."92-low-latency" = {
-			"context.properties" = [
-				{ name = "link.max-buffers"; value = 16; }
-			];
-		};
-	};
+  ##################################################
+  # System packages
+  ##################################################
 
-##################################################
-# Input
-##################################################
+  environment.systemPackages = with pkgs; [
+    vim
+    wget
+    macchina
+    hyfetch
+    nerd-fonts.fira-code
+  ];
 
-	services.libinput.enable = true;
+  ##################################################
+  # Nix package manager config
+  ##################################################
 
-##################################################
-# Users
-##################################################
+  nixpkgs.config.allowUnfree = true;
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+  };
 
-	users.users.xein = {
-		isNormalUser = true;
-		shell = pkgs.zsh;
-		extraGroups = [ "wheel" "video" ];
-		packages = with pkgs; [
-			tree
-		];
-	};
+  nixpkgs.overlays = [
+    (final: prev: {
+      raysession = prev.raysession.override {
+        python3Packages = prev.python312Packages;
+      };
+    })
+  ];
 
-##################################################
-# Programs
-##################################################
+  ##################################################
+  # Flake update timer
+  ##################################################
 
-	programs.firefox.enable = true;
-	programs.zsh.enable = true;
+  systemd.services.flake-update = {
+    description = "Update flake inputs and rebuild NixOS";
+    serviceConfig = {
+      Type = "oneshot";
+      WorkingDirectory = "/home/xein/dotfiles";
+      Nice = 19;
+      IOSchedulingClass = "idle";
+      ExecStart = "${pkgs.writeShellScript "flake-update" ''
+        set -e
+        ${pkgs.nix}/bin/nix flake update --flake /home/xein/dotfiles
+        ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake /home/xein/dotfiles#$(hostname)
+      ''}";
+    };
+    unitConfig.ConditionACPower = true;
+  };
 
-	programs.steam = {
-		enable = true;
-		remotePlay.openFirewall = true;
-		dedicatedServer.openFirewall = true;
-	};
+  systemd.timers.flake-update = {
+    description = "Weekly flake update";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "weekly";
+      Persistent = true;
+      RandomizedDelaySec = "2h";
+    };
+    unitConfig.ConditionPathExists = "!/run/user/1000";
+  };
 
-##################################################
-# System packages
-##################################################
+  ##################################################
+  # System version
+  ##################################################
 
-	environment.systemPackages = with pkgs; [
-		vim
-		wget
-
-# system info
-		macchina
-		hyfetch
-	];
-
-##################################################
-# Services
-##################################################
-
-	services.openssh.enable = true;
-
-	# Weekly flake update + rebuild
-	systemd.services.flake-update = {
-		description = "Update flake inputs and rebuild NixOS";
-		serviceConfig = {
-			Type = "oneshot";
-			WorkingDirectory = "/home/xein/dotfiles";
-			Nice = 19;
-			IOSchedulingClass = "idle";
-			ExecStart = "${pkgs.writeShellScript "flake-update" ''
-				set -e
-				${pkgs.nix}/bin/nix flake update --flake /home/xein/dotfiles
-				${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake /home/xein/dotfiles#kaveh
-			''}";
-		};
-		unitConfig.ConditionACPower = true;
-	};
-
-	systemd.timers.flake-update = {
-		description = "Weekly flake update";
-		wantedBy = [ "timers.target" ];
-		timerConfig = {
-			OnCalendar = "weekly";
-			Persistent = true;
-			RandomizedDelaySec = "2h";
-		};
-		unitConfig.ConditionPathExists = "!/run/user/1000";
-	};
-
-##################################################
-# Nix package manager config
-##################################################
-
-	nixpkgs.config.allowUnfree = true;
-	nix.settings = {
-		experimental-features = [
-			"nix-command"
-			"flakes"
-		];
-	};
-
-##################################################
-# System version (DO NOT change even if you update)
-##################################################
-
-	system.stateVersion = "25.11";
+  system.stateVersion = "25.11";
 }

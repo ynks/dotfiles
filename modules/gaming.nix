@@ -1,9 +1,7 @@
 { pkgs, ... }:
 
 {
-	home.packages = with pkgs; [
-		protonup-qt
-		mangohud
-		gamescope
-	];
+  home.packages = with pkgs; [
+    mangohud
+  ];
 }
