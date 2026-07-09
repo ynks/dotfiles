@@ -35,6 +35,7 @@ in
     lazygit
     gh-dash
     github-cli
+    gitkraken
 
     # AI assistants
     opencode
