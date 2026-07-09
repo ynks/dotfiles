@@ -28,8 +28,9 @@
       nv = "fd --hidden --type f --exclude .git | fzf --reverse | xargs nvim";
       rebuild = "sudo nixos-rebuild switch --flake ~/Code/dotfiles#$(hostname)";
       devenv = "nix develop --command zsh";
-      rider = "nohup rider >/dev/null 2>&1 &";
-      clion = "nohup clion >/dev/null 2>&1 &";
+      rider = "setsid rider >/dev/null 2>&1";
+      clion = "setsid clion >/dev/null 2>&1";
+      edit = "setsid kwrite >/dev/null 2>&1";
       ".." = "cd ..";
     };
   };
@@ -41,11 +42,28 @@
     settings = {
       user.name = "Xein";
       user.email = "xgonip@gmail.com";
-      core.editor = "nvim";
+      core.editor = "kwrite --stdin";
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
       pull.rebase = true;
       rebase.autoStash = true;
+
+      merge = {
+        tool = "kdiff3";
+      };
+
+      mergetool = {
+        prompt = false;
+        keepBackup = false;
+      };
+
+      diff = {
+        tool = "kdiff3";
+      };
+
+      difftool = {
+        prompt = false;
+      };
     };
   };
 

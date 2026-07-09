@@ -14,6 +14,7 @@ in
     yakuake
     dolphin
     kate
+    kdiff3
     krename
     kfind
     filelight

@@ -18,7 +18,14 @@ let
     "ARLKPLEK26FVA6SNYD2GEYDKI3QHG"
   ];
   indexed = lib.imap1 (i: token: { inherit i token; }) runnerTokens;
+
+  vcpkgCachePath = "/var/cache/vcpkg";
+  vcpkgDownloadsPath = "/home/xein/.vcpkg/root/downloads";
+  runnerHome = i: "/var/lib/github-runners/nullptr-${toString i}";
 in {
+  boot.tmp.useTmpfs = true;
+  boot.tmp.tmpfsSize = "50%";
+
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
@@ -37,6 +44,22 @@ in {
       tokenFile = "/etc/github-runners/token-${toString i}";
       package = githubRunner;
       extraPackages = with pkgs; [ git curl wget gnutar zip unzip ];
+    };
+  }) indexed);
+
+  systemd.tmpfiles.rules = [
+    "d ${vcpkgCachePath} 0777 root root - -"
+  ] ++ map ({ i, ... }: "d ${runnerHome i} 0755 github-runner-nullptr-${toString i} users - -") indexed;
+
+  systemd.services = lib.listToAttrs (map ({ i, ...}: {
+    name = "github-runner-nullptr-${toString i}";
+    value = {
+      environment = {
+        HOME = lib.mkForce (runnerHome i);
+        VCPKG_DEFAULT_BINARY_CACHE = vcpkgCachePath;
+        VCPKG_DOWNLOADS = vcpkgDownloadsPath;
+      };
+      serviceConfig.ReadWritePaths = [ vcpkgCachePath vcpkgDownloadsPath (runnerHome i) ];
     };
   }) indexed);
 
