@@ -48,6 +48,11 @@
     };
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
+
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
@@ -105,6 +110,7 @@
 
   services.openssh.enable = true;
   services.printing.enable = true;
+  services.flatpak.enable = true;
 
   ##################################################
   # Users
