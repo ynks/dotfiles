@@ -22,5 +22,7 @@
 
   home.packages = with pkgs; [
     discord
+    onlyoffice-desktopeditors
+    libreoffice
   ];
 }

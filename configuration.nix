@@ -17,6 +17,7 @@
   ##################################################
 
   networking.networkmanager.enable = true;
+  networking.firewall.allowedTCPPorts = [ 1701 9001 ];
 
   ##################################################
   # Time & Locale
@@ -103,6 +104,17 @@
   };
   programs.kdeconnect.enable = true;
   programs.nix-ld.enable = true;
+
+  programs.weylus = {
+  enable = true;
+  openFirewall = true; # Automatically handles ports 1701 and 9001
+  users = [ "xein" ]; # Replaces manual uinput group rules
+};
+
+xdg.portal = {
+  enable = true;
+  extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
+};
 
   ##################################################
   # Services

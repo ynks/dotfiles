@@ -70,5 +70,6 @@ in
     labplot
     kdiff3
     packagekit-qt
+    calligra
   ];
 }
