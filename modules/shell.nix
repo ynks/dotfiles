@@ -42,7 +42,7 @@
     settings = {
       user.name = "Xein";
       user.email = "xgonip@gmail.com";
-      core.editor = "kwrite --stdin";
+      core.editor = "kwrite";
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
       pull.rebase = true;
