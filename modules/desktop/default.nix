@@ -67,5 +67,7 @@ in
     step
     rocs
     labplot
+    kdiff3
+    packagekit-qt
   ];
 }
