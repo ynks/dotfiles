@@ -111,11 +111,6 @@
   users = [ "xein" ]; # Replaces manual uinput group rules
 };
 
-xdg.portal = {
-  enable = true;
-  extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
-};
-
   ##################################################
   # Services
   ##################################################
