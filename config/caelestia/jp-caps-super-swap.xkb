@@ -1,0 +1,7 @@
+xkb_symbols "basic" {
+    include "jp(basic)"
+    name[Group1] = "Japanese";
+
+    key <CAPS> { [ Super_L ] };
+    key <LWIN> { [ Caps_Lock ] };
+};

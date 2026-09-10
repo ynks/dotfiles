@@ -1,8 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/Code/dotfiles/config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
+  codex-desktop = inputs.codex-desktop-linux.packages.${pkgs.system}.default;
 in
 
 {
@@ -21,6 +22,7 @@ in
     neovim
     jetbrains.clion
     jetbrains.rider
+    android-studio
 
     # Development tools
     lua
@@ -39,9 +41,12 @@ in
     smartgit
     gitkraken
     bcompare
+    meld
 
     # AI assistants
     opencode
     claude-code
+    codex
+    codex-desktop
   ];
 }

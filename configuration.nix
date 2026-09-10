@@ -95,6 +95,7 @@
   ##################################################
 
   programs.firefox.enable = true;
+  programs.partition-manager.enable = true;
   programs.zsh.enable = true;
   programs.steam = {
     enable = true;
@@ -141,11 +142,22 @@
     nerd-fonts.fira-code
   ];
 
+  # The Caelestia shell (kaveh) renders its icons and UI text in these; its
+  # package doesn't propagate them itself (only its devShell lists them).
+  fonts.packages = with pkgs; [
+    material-symbols
+    rubik
+    nerd-fonts.caskaydia-cove
+  ];
+
   ##################################################
   # Nix package manager config
   ##################################################
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowInsecurePredicate = _: true;
+  };
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
   };

@@ -19,7 +19,6 @@ in
     kfind
     filelight
     kdf
-    partitionmanager
     ksystemlog
     ktimer
     sweeper
@@ -33,10 +32,6 @@ in
     spectacle
     kcolorchooser
     kcalc
-    kontact
-    kmail
-    korganizer
-    akregator
     kteatime
     ghostwriter
     kleopatra
@@ -70,6 +65,6 @@ in
     labplot
     kdiff3
     packagekit-qt
-    calligra
+    okular
   ];
 }

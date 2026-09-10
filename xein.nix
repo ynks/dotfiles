@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   imports = [
@@ -22,7 +22,9 @@
 
   home.packages = with pkgs; [
     discord
-    onlyoffice-desktopeditors
     libreoffice
+    googleearth-pro
+    anki
+    inputs.sidra.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }

@@ -1,5 +1,4 @@
 gui:
-  # UI theme
   theme:
     activeBorderColor:
       - "#80d4d5"
@@ -27,9 +26,3 @@ gui:
       - "#ffb4ab"
     defaultFgColor:
       - "#dde4e3"
-git:
-  # Delta configuration for diff view
-  pagers:
-    - colorArg: always
-      pager: delta --dark --paging=never
-      useConfig: false

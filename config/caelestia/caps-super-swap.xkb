@@ -1,0 +1,7 @@
+xkb_symbols "basic" {
+    include "us(basic)"
+    name[Group1] = "English (US, Caps Lock as Super, left Super as Caps Lock)";
+
+    key <CAPS> { [ Super_L ] };
+    key <LWIN> { [ Caps_Lock ] };
+};
